@@ -44,4 +44,4 @@ for role, message in reversed(st.session_state.chat_history):
 # 입력 필드
 st.chat_input("질문을 입력하세요:", key="chat_input", on_submit=get_response)
 
-st.write("이 챗봇은 고객 상담 및 AI 지원을 제공합니다. 🚀")
+st.write("chat GPT 아니고 헷GPT 입니다.")
