@@ -10,7 +10,7 @@ load_dotenv()  # .env 파일에서 환경 변수 불러오기
 api_key = os.getenv("HUGGINGFACE_API_KEY")  # 환경 변수에서 API 키 가져오기
 
 # Streamlit 페이지 설정
-st.set_page_config(page_title="AI 이미지 생성", page_icon="🎨", layout="wide")
+st.set_page_config(page_title="화가 헷GPT", page_icon="🎨", layout="wide")
 
 # 웹 페이지 제목 및 설명 추가
 st.title("🎨 AI를 활용한 이미지 생성")
