@@ -33,7 +33,7 @@ def get_response():
             
             # 대화 기록 저장
             st.session_state.chat_history.insert(0, ("👤 사용자:", user_input))
-            st.session_state.chat_history.insert(0, ("🤖 AI:", response))
+            st.session_state.chat_history.insert(0, ("🤖 헷GPT:", response))
             st.session_state.pop("chat_input", None)
 
 # 대화 출력 (최신 메시지가 위로)
