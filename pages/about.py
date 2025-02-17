@@ -22,12 +22,12 @@ st.markdown(
     ---
     
     ## 🛠️ 사용 기술 & 보안
-    - Hugging Face API (Gemma 2 모델 사용) → AI 기반 자연어 처리
+    - Hugging Face API (google/gemma-2-9b-it 모델 사용) → AI 기반 자연어 처리
     - Streamlit을 활용한 웹 기반 UI → 직관적인 사용자 인터페이스 제공
     - Python 및 NLP 기반 자연어 처리 → 대화형 챗봇 기능 구현
 
     ---
-    
+
     ## 🔒 보안 및 데이터 보호
     - 환경 변수 (.env) 사용 → API 키 및 민감한 정보 보호
     - .gitignore 설정 → .env 파일을 GitHub에 업로드하지 않도록 방지
