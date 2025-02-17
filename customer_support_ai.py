@@ -24,7 +24,7 @@ if "chat_history" not in st.session_state:
 def get_response():
     user_input = st.session_state.chat_input
     if user_input:
-        with st.spinner("AI가 답변을 생성 중입니다..."):
+        with st.spinner("헷GPT가 답변을 생성 중입니다..."):
             response = client.chat.completions.create(
                 model="google/gemma-2-9b-it", 
                 messages=[{"role": "user", "content": user_input}], 
