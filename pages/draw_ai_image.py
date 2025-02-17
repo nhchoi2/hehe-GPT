@@ -13,8 +13,8 @@ api_key = os.getenv("HUGGINGFACE_API_KEY")  # 환경 변수에서 API 키 가져
 st.set_page_config(page_title="화가 헷GPT", page_icon="🎨", layout="wide")
 
 # 웹 페이지 제목 및 설명 추가
-st.title("🎨 AI를 활용한 이미지 생성")
-st.write("텍스트를 입력하면 AI가 이미지를 생성해줍니다!")
+st.title("🎨 헷GPT를 활용한 이미지 생성")
+st.write("텍스트를 입력하면 헷GPT가 이미지를 생성해줍니다!")
 
 # Hugging Face Inference API 설정
 client = InferenceClient(provider="hf-inference", api_key=api_key)  # API 키를 사용하여 Inference Client 설정
@@ -34,7 +34,7 @@ def translate_text(input_text):
 
 # 버튼 없이 챗 인풋 입력 시 자동 실행
 if prompt:
-    with st.spinner("AI가 이미지를 생성 중입니다..."):
+    with st.spinner("헷GPT가 이미지를 생성 중입니다..."):
         translated_prompt = translate_text(prompt)
         # 반환값은 이미 PIL 이미지 객체임
         image = client.text_to_image(translated_prompt, model="black-forest-labs/FLUX.1-dev")

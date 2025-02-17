@@ -24,7 +24,7 @@ with st.sidebar:
 
 # 메인 제목 및 설명
 st.title("💬 똑똑한 AI 헷GPT")  # 메인 페이지 제목
-st.write("고객님의 질문을 입력하면 헷GPT가 답변해드립니다.")  # 페이지 설명
+st.write("질문을 입력하면 헷GPT가 답변해드립니다.")  # 페이지 설명
 
 # 대화 기록 저장
 if "chat_history" not in st.session_state:
