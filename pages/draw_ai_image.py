@@ -13,7 +13,7 @@ api_key = os.getenv("HUGGINGFACE_API_KEY")  # 환경 변수에서 API 키 가져
 st.set_page_config(page_title="화가 헷GPT", page_icon="🎨", layout="wide")
 
 # 웹 페이지 제목 및 설명 추가
-st.title("🎨 헷GPT를 활용한 이미지 생성")
+st.title("🎨 이미지 생성하는 헷GPT")
 st.write("텍스트를 입력하면 헷GPT가 이미지를 생성해줍니다!")
 
 # Hugging Face Inference API 설정
