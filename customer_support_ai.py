@@ -11,10 +11,21 @@ api_key = os.getenv("HUGGINGFACE_API_KEY")
 client = InferenceClient(provider="hf-inference", api_key=api_key)
 
 # Streamlit UI 설정
-st.set_page_config(page_title="헷 GPT", page_icon="💬", layout="wide")
+st.set_page_config(page_title="헷GPT", page_icon="💬", layout="wide")
+
+
+with st.sidebar:
+    st.header("📌 설정")
+    clear_chat = st.button("💬 대화 기록 초기화")
+    
+    
+    if clear_chat:
+        st.session_state.chat_history = []
+        st.success("대화 기록이 초기화되었습니다.")   
+    
 
 st.title("💬 맞춤형 AI 고객 상담 챗봇")
-st.write("고객님의 질문을 입력하면 헷 GPT가 답변해드립니다.")
+st.write("고객님의 질문을 입력하면 헷GPT가 답변해드립니다.")
 
 # 대화 기록 저장
 if "chat_history" not in st.session_state:
@@ -40,8 +51,6 @@ def get_response():
 st.markdown("### 대화 기록")
 for role, message in reversed(st.session_state.chat_history):
     st.markdown(f"**{role}** {message}")
-
 # 입력 필드
 st.chat_input("질문을 입력하세요:", key="chat_input", on_submit=get_response)
-
 st.write("chat GPT 아니고 헷GPT 입니다.")
