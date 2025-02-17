@@ -80,8 +80,7 @@ def get_response():
 # 입력 필드 & 버튼 배치
 with col1:
     st.text_input("질문을 입력하세요:", key="user_input", on_change=get_response, placeholder="여기에 질문을 입력하세요...")
-with col2:
-    st.button("보내기", on_click=get_response)
+
 
 st.markdown("---")
 st.write("이 챗봇은 고객 상담 및 AI 지원을 제공합니다. 🚀")
