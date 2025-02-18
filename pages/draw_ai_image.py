@@ -19,6 +19,14 @@ st.write("텍스트를 입력하면 헷GPT가 이미지를 생성해줍니다!")
 # Hugging Face Inference API 설정
 client = InferenceClient(provider="hf-inference", api_key=api_key)  # API 키를 사용하여 Inference Client 설정
 
+# 현재 페이지에 대한 고유한 키 생성 (페이지별 대화 기록 유지)
+current_page = "draw_ai_image"  # 현재 페이지의 고유한 식별자
+page_key = f"chat_history_{current_page}"
+
+# 페이지별 대화 기록 초기화
+if page_key not in st.session_state:
+    st.session_state[page_key] = []
+
 # 사용자 입력 받기 (챗 인풋으로 변경)
 prompt = st.chat_input("생성할 이미지 설명을 입력하세요:")  # 사용자가 입력하는 프롬프트
 
