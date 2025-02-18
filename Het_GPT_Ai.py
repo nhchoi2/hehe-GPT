@@ -53,6 +53,3 @@ for role, message in reversed(st.session_state.chat_history):  # 대화 기록�
 
 # 입력 필드
 st.chat_input("질문을 입력하세요:", key="chat_input", on_submit=get_response)  # 사용자 입력 필드 설정 및 응답 함수 연결
-
-# 페이지 하단 설명
-st.write("chat GPT 아니고 헷GPT 입니다.")  # 페이지 하단 메시지
