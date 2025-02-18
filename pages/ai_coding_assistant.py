@@ -29,7 +29,8 @@ if st.sidebar.button("대화 기록 초기화"):
 # 대화 기록을 저장할 세션 상태 초기화
 # ------------------------------------------------------------------------
 # st.session_state를 사용해 대화 기록을 저장합니다.
-if "chat_history" not in st.session_state:
+# 대화 기록 초기화 시, 리스트 형식인지 확인 후 처리
+if "chat_history" not in st.session_state or not isinstance(st.session_state.chat_history, list):
     st.session_state.chat_history = []
 
 # ------------------------------------------------------------------------
@@ -49,10 +50,13 @@ client = InferenceClient(provider="hf-inference", api_key=api_key)
 # ------------------------------------------------------------------------
 # 이미 저장된 대화 기록(세션 상태)을 화면에 표시합니다.
 for chat in st.session_state.chat_history:
-    if chat["role"] == "user":
-        st.chat_message("user").write(chat["content"])  # 사용자 메시지 출력
+    if isinstance(chat, dict) and "role" in chat and "content" in chat:  # 데이터 타입 및 키 검증 추가
+        if chat["role"] == "user":
+            st.chat_message("user").write(chat["content"])  # 사용자 메시지 출력
+        else:
+            st.chat_message("assistant").write(chat["content"])  # AI(어시스턴트) 메시지 출력
     else:
-        st.chat_message("assistant").write(chat["content"])  # AI(어시스턴트) 메시지 출력
+        st.warning("올바르지 않은 대화 데이터가 감지되었습니다. 일부 메시지는 표시되지 않을 수 있습니다.")        
 
 # ------------------------------------------------------------------------
 # 사용자로부터 코드 입력 받기 (대화형 입력창)
