@@ -17,16 +17,8 @@ st.set_page_config(
 )
 
 
-# 사이드바 초기화 버튼
-if st.sidebar.button("대화 기록 초기화"):
-    # 만약 사이드바의 '대화 기록 초기화' 버튼을 누르면
-    st.session_state.chat_history = []  # 세션 상태에서 'chat_history' 변수를 빈 리스트로 초기화하여 대화 기록 삭제
 
 
-# 대화 기록 초기화 및 세션 상태 확인
-if "chat_history" not in st.session_state or not isinstance(st.session_state.chat_history, list):
-    # 만약 'chat_history'가 세션 상태에 존재하지 않거나, 리스트가 아닐 경우
-    st.session_state.chat_history = []  # 'chat_history'를 빈 리스트로 초기화하여 정상적으로 작동하도록 설정
 
 # 페이지 제목 및 설명 표시
 st.title("🤖 코드헷GPT")  
@@ -36,18 +28,26 @@ st.write("코드를 입력하면 헷GPT가 개선점, 디버깅 방법 등을 �
 # Hugging Face InferenceClient 초기화
 client = InferenceClient(provider="hf-inference", api_key=api_key)  # API 키를 사용해 Hugging Face Inference Client 생성
 
+# 현재 페이지에 대한 고유한 키 생성 (페이지별 대화 기록 유지)
+current_page = "ai_coding_assistant"  # 현재 페이지의 고유한 식별자
+page_key = f"chat_history_{current_page}"
+
+# 페이지별 대화 기록 초기화
+if page_key not in st.session_state:
+    st.session_state[page_key] = []
+
+# 사이드바 초기화 버튼
+if st.sidebar.button("대화 기록 초기화"):
+    # 만약 사이드바의 '대화 기록 초기화' 버튼을 누르면
+    st.session_state[page_key]= []  # 세션 상태에서 'chat_history' 변수를 빈 리스트로 초기화하여 대화 기록 삭제
+
 
 # 기존 대화 기록 출력
-for chat in st.session_state.chat_history:
-    # 세션 상태에서 저장된 대화 기록(chat_history)을 순회하며 하나씩 출력
-    if isinstance(chat, dict) and "role" in chat and "content" in chat:  # 데이터 형식이 올바른지 확인
-        if chat["role"] == "user":
-            st.chat_message("user").write(chat["content"])  # 사용자가 입력한 메시지를 UI에 표시
-        else:
-            st.chat_message("assistant").write(chat["content"])  # AI가 생성한 응답을 UI에 표시
+for chat in st.session_state[page_key]:
+    if chat["role"] == "user":
+        st.chat_message("user").write(chat["content"])  
     else:
-        st.warning("올바르지 않은 대화 데이터가 감지되었습니다. 일부 메시지는 표시되지 않을 수 있습니다.")  # 비정상적인 데이터가 감지될 경우 경고 메시지 출력
-
+        st.chat_message("assistant").write(chat["content"])
 
 # 사용자 입력 받기 (대화형 입력창)
 user_input = st.chat_input("코드를 입력하세요:")  # 사용자가 코드를 입력할 수 있는 대화형 입력창 제공
