@@ -54,7 +54,7 @@ st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
 
 if page_key not in st.session_state:
-    st.session_state.chat_history = []
+    st.session_state.page_key = []
 
 def get_embedding(text):
     result = embedding_client.feature_extraction(text)
