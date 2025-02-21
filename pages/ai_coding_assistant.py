@@ -72,7 +72,7 @@ if st.button("View Preview"):
     components.html(
         """
         <script>
-            window.open('/Het_GPT_Ai', '_blank');
+            window.open('/preview', '_blank');
         </script>
         """,
         height=0,
