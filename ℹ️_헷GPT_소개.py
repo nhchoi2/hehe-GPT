@@ -23,7 +23,7 @@ st.markdown("""
 - **Qwen 모델 기반 코드 생성:** `Qwen2.5-Coder-32B-Instruct` 모델을 활용하여 AI 기반 코드 생성 및 리팩토링 지원
 - **AI 이미지 생성:** Diffusion 모델을 활용하여 텍스트 기반 이미지 생성 (`black-forest-labs/FLUX.1-dev` 적용)
 - **보안 강화:** `.env` 파일을 사용하여 API 키 보호 및 Streamlit Secrets 설정으로 환경 변수 관리
-- **CI/CD 자동 배포:** GitHub Actions를 활용하여 Streamlit Cloud에 지속적 배포 파이프라인 구축
+- **Streamlit Cloud 기반 배포:** Streamlit의 무료 클라우드 환경을 활용하여 가볍고 빠른 서비스 제공
 """)
 
 # 사용된 인공지능 모델
@@ -38,9 +38,8 @@ st.markdown("""
 st.header("보안 및 배포")
 st.markdown("""
 - **환경 변수 (.env) 사용** → API 키, Hugging Face 토큰 등을 `.env` 파일에 저장하여 보안 유지
-- **GitHub Secrets 사용** → GitHub Actions에서 배포 시 환경 변수 보호 및 CI/CD 적용
 - **Streamlit Secrets 사용** → 배포 환경에서 안전하게 API 키 관리 및 클라이언트 인증
-- **자동 배포 시스템** → GitHub Actions를 이용한 지속적 통합 및 배포 자동화 (CI/CD 적용)
+- **Streamlit Cloud 배포** → 추가적인 서버 없이 Streamlit Cloud를 활용한 무료 배포
 """)
 
 # 각 페이지별 기능 & 기술 설명
@@ -61,5 +60,5 @@ st.markdown("""
 - **다양한 프로그래밍 언어 지원:** Python 외에도 JavaScript, SQL, Rust 등 다중 언어 실행 지원 예정
 - **AI 모델 최적화:** Transformer 기반 모델 최적화 및 Fine-tuning 기법 활용하여 응답 속도 개선
 - **사용자 코드 저장 기능:** 클라우드 기반 코드 저장 및 재실행 기능 추가
-- **협업 기능 강화:** 실시간 코드 공유 및 다중 사용자 협업 환경 구축 (WebSocket 연동 예정)
+- **협업 기능 강화:** 실시간 코드 공유 및 다중 사용자 협업 환경 구축
 """)
