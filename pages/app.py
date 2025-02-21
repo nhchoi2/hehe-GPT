@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 
-# 세션 상태 초기화
+# 세션 상태 초기화 (없으면 0으로 설정)
 if "generated_code" not in st.session_state:
     st.session_state["generated_code"] = ""
 
@@ -16,20 +16,21 @@ import streamlit as st
 
 st.title("하이미디어")
 
-st.subheader("현재 숫자:")
+# 숫자 초기화
 if "count" not in st.session_state:
-    st.session_state.count = 0
+    st.session_state["count"] = 0
 
-st.markdown(f"<h1 style='text-align: center;'>{st.session_state.count}</h1>", unsafe_allow_html=True)
+st.subheader("현재 숫자:")
+st.markdown(f"<h1 style='text-align: center;'>{st.session_state['count']}</h1>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 with col1:
     if st.button("증가"):
-        st.session_state.count += 1
+        st.session_state["count"] += 1
         st.rerun()
 with col2:
     if st.button("감소"):
-        st.session_state.count -= 1
+        st.session_state["count"] -= 1
         st.rerun()
     """
 
@@ -40,6 +41,6 @@ with col2:
 # 새 창에서 실행 버튼
 if "generated_code" in st.session_state and st.session_state["generated_code"]:
     st.markdown(
-        f'<a href="preview" target="_blank"><button style="padding:10px 20px; font-size:16px;">뷰 보기 (새 창)</button></a>',
+        f'<a href="/preview" target="_blank"><button style="padding:10px 20px; font-size:16px;">뷰 보기 (새 창)</button></a>',
         unsafe_allow_html=True
     )
