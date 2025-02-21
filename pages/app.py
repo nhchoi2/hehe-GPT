@@ -57,7 +57,4 @@ if "generated_code" in st.session_state and st.session_state["generated_code"].s
     st.code(st.session_state["generated_code"], language="python")
     
     # Provide a link to view the preview page
-    st.markdown(
-        f'<a href="../preview" target="_blank"><button style="padding:10px 20px; font-size:16px;">뷰 보기 (새 창)</button></a>',
-        unsafe_allow_html=True
-    )
+    st.markdown("[View Preview](../preview/preview)", unsafe_allow_html=True)
