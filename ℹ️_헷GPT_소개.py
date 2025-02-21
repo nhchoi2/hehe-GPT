@@ -7,7 +7,7 @@ st.set_page_config(page_title="헷GPT 소개", layout="wide")
 st.title("헷GPT: 실시간 코드 실행 및 미리보기 플랫폼")
 
 # 소개
-st.subheader("소개")
+st.header("소개")
 st.write(
     "헷GPT는 사용자가 직접 입력한 Python 및 HTML 코드를 웹 환경에서 실시간으로 실행하고, "
     "그 결과를 즉시 확인할 수 있는 인터랙티브 플랫폼입니다. "
