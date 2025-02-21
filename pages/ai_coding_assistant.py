@@ -2,7 +2,6 @@ import streamlit as st  # 웹 UI 생성을 위한 Streamlit 라이브러리 임�
 from huggingface_hub import InferenceClient  # Hugging Face Inference API 사용을 위한 클라이언트 임포트
 import os  # 운영체제 관련 기능 사용 (환경 변수 로드 등)
 from dotenv import load_dotenv  # .env 파일에서 환경 변수를 불러오기 위한 라이브러리
-import streamlit.components.v1 as components  # 새 창으로 이동하기 위해 components 임포트
 
 
 # 환경 변수 로드
@@ -68,12 +67,3 @@ if user_input:
     st.session_state.chat_history.append({"role": "assistant", "content": assistant_message})  # AI 응답을 기록
     st.chat_message("assistant").write(assistant_message)  # AI의 응답을 UI에 표시
 
-if st.button("View Preview"):
-    components.html(
-        """
-        <script>
-            window.open('/preview', '_blank');
-        </script>
-        """,
-        height=0,
-    )
