@@ -19,7 +19,7 @@ if st.button("Generate Code"):
     else:
         try:
             st.info("Generating code, please wait...")
-            api_key = os.getenv("HF_API_KEY")
+            api_key = os.getenv("HUGGINGFACE_API_KEY")
             if not api_key:
                 st.error("API key not found. Please set HF_API_KEY in your .env file.")
             headers = {"Authorization": f"Bearer {api_key}"}
