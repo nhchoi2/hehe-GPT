@@ -58,6 +58,6 @@ if "generated_code" in st.session_state and st.session_state["generated_code"].s
     
     # Provide a link to view the preview page
     st.markdown(
-        f'<a href="/pages/preview" target="_blank"><button style="padding:10px 20px; font-size:16px;">뷰 보기 (새 창)</button></a>',
+        f'<a href="../preview" target="_blank"><button style="padding:10px 20px; font-size:16px;">뷰 보기 (새 창)</button></a>',
         unsafe_allow_html=True
     )
