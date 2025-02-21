@@ -51,10 +51,7 @@ if st.button("Generate Code"):
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
-# Display the generated code (if available)
-if "generated_code" in st.session_state and st.session_state["generated_code"].strip():
-    st.subheader("Generated Code Preview")
-    st.code(st.session_state["generated_code"], language="python")
-    
-    # Provide a link to view the preview page
-    st.markdown("[View Preview](./preview)", unsafe_allow_html=True)
+if "generated_code" in st.session_state and st.session_state["generated_code"]:
+    if st.button("뷰 보기 (새 창)"):
+        st.switch_page("pages/preview.py")
+
