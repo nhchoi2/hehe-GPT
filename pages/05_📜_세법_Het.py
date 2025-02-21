@@ -43,7 +43,7 @@ with st.sidebar:
         st.success("대화 기록이 초기화되었습니다.")
 
 # 메인 타이틀 및 설명
-st.title("💬 세법전문 AI, Kevin")
+st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
 
 if "chat_history" not in st.session_state:
