@@ -53,7 +53,7 @@ with st.sidebar:
 st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
 
-if "chat_history" not in st.session_state:
+if page_key not in st.session_state:
     st.session_state.chat_history = []
 
 def get_embedding(text):
