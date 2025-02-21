@@ -2,7 +2,7 @@ import streamlit as st
 
 st.title("AI가 생성한 코드 실행")
 
-# 세션 상태 확인 후 실행
+# 코드 실행 오류 방지 처리
 try:
     if "generated_code" in st.session_state and st.session_state["generated_code"]:
         st.write("디버깅: 실행할 코드 확인")
