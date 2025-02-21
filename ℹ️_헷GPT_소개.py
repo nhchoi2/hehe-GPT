@@ -14,6 +14,15 @@ st.write(
     "개발자, 데이터 사이언티스트, 연구자 등 누구나 쉽게 활용할 수 있도록 설계되었습니다."
 )
 
+# 프로젝트 목적과 활용 사례
+st.header("프로젝트 목적 및 활용 사례")
+st.markdown("""
+- **AI 기반 개발 보조 도구:** 개발자가 실시간으로 코드 실행, AI 코드 분석 및 디버깅 가능
+- **빠른 프로토타이핑 환경:** Streamlit 기반의 직관적인 인터페이스 제공
+- **AI 이미지 생성:** 텍스트 프롬프트를 기반으로 창의적인 비주얼 컨텐츠 제작 가능
+- **교육 및 학습 보조:** AI를 활용한 코드 실행 및 분석 기능으로 프로그래밍 학습 지원
+""")
+
 # 주요 기능
 st.header("주요 기능")
 st.markdown("""
@@ -42,16 +51,15 @@ st.markdown("""
 - **Streamlit Cloud 배포** → 추가적인 서버 없이 Streamlit Cloud를 활용한 무료 배포
 """)
 
-# 각 페이지별 기능 & 기술 설명
-st.header("각 페이지별 기능 & 기술")
+# 각 페이지로 이동하기
+st.header("각 기능 페이지 바로 가기")
 st.markdown("""
-| 페이지명 | 설명 | 사용 기술 |
-|---------|------|----------|
-| **ℹ️ 헷GPT 소개** | 프로젝트 개요 및 기능 설명 | Streamlit UI |
-| **🤗 헷GPT (챗봇)** | AI 기반 자연어 처리 챗봇 | Hugging Face, `google/gemma-2-9b-it` |
-| **🤖 코드 헷GPT** | AI 기반 코드 분석 & 리팩토링 | `Qwen2.5-Coder-32B-Instruct` |
-| **🎨 화가 헷GPT** | Diffusion 모델 기반 이미지 생성 | `black-forest-labs/FLUX.1-dev` |
-| **💻 실행 헷GPT** | Python & HTML 코드 실행 및 미리보기 | `exec()`, `streamlit.components.v1.html()` |
+각 기능별 페이지를 클릭하여 직접 사용해보세요:
+
+- [🤗 헷GPT (챗봇 페이지)](/about_GPT)
+- [🤖 코드 헷GPT (AI 코드 분석 페이지)](/dev_helper)
+- [🎨 화가 헷GPT (AI 이미지 생성 페이지)](/draw_ai_image)
+- [💻 실행 헷GPT (코드 실행 페이지)](/preview)
 """)
 
 # 향후 개발 계획
@@ -61,4 +69,11 @@ st.markdown("""
 - **AI 모델 최적화:** Transformer 기반 모델 최적화 및 Fine-tuning 기법 활용하여 응답 속도 개선
 - **사용자 코드 저장 기능:** 클라우드 기반 코드 저장 및 재실행 기능 추가
 - **협업 기능 강화:** 실시간 코드 공유 및 다중 사용자 협업 환경 구축
+""")
+
+# 배포 환경 정보
+st.header("배포 환경")
+st.markdown("""
+헷GPT는 **Streamlit Cloud**에서 호스팅되며, 사용자는 별도의 설정 없이 웹 브라우저에서 바로 사용할 수 있습니다. 
+배포는 **Streamlit Secrets**을 활용하여 API 키를 보호하고 있으며, 간편한 배포 환경을 제공합니다.
 """)
