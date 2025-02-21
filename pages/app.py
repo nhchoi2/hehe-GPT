@@ -1,53 +1,60 @@
 import streamlit as st
 import requests
 import os
+from dotenv import load_dotenv
 
-# Hugging Face API 설정
-HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")  # 환경 변수에서 API 키 불러오기
-MODEL_NAME = "Qwen/Qwen2.5-Coder-32B-Instruct"
-API_URL = f"https://api-inference.huggingface.co/models/{MODEL_NAME}"
+# Load environment variables from .env (ensure you have HF_API_KEY set)
+load_dotenv()
 
-# API 요청 함수
-def query_huggingface_api(prompt):
-    headers = {"Authorization": f"Bearer {HF_API_KEY}"}
-    payload = {"inputs": prompt, "parameters": {"max_length": 512, "temperature": 0.7}}
+st.title("Streamlit Code Generator")
+st.write("Enter a description of the UI functionality you want, and an AI model will generate the corresponding Streamlit code.")
 
-    response = requests.post(API_URL, headers=headers, json=payload)
+# Text area for UI description
+user_description = st.text_area("UI Description", height=150)
+
+# When "Generate Code" is clicked, trigger the API request
+if st.button("Generate Code"):
+    if not user_description.strip():
+        st.error("Please enter a UI description!")
+    else:
+        try:
+            st.info("Generating code, please wait...")
+            api_key = os.getenv("HF_API_KEY")
+            if not api_key:
+                st.error("API key not found. Please set HF_API_KEY in your .env file.")
+            headers = {"Authorization": f"Bearer {api_key}"}
+            payload = {
+                "inputs": f"Generate Streamlit code for the following UI description:\n\n{user_description}\n",
+                "parameters": {"max_new_tokens": 512},
+                "options": {"wait_for_model": True}
+            }
+            # Call the Hugging Face Inference API
+            response = requests.post(
+                "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-Coder-32B-Instruct",
+                headers=headers,
+                json=payload
+            )
+            if response.status_code != 200:
+                st.error(f"Error generating code: {response.status_code} - {response.text}")
+            else:
+                result = response.json()
+                # Parse the result depending on the API response structure.
+                if isinstance(result, list) and "generated_text" in result[0]:
+                    generated_code = result[0]["generated_text"]
+                else:
+                    generated_code = result.get("generated_text", "")
+                if not generated_code:
+                    st.error("No code was generated. Please try again with a different description.")
+                else:
+                    st.session_state["generated_code"] = generated_code
+                    st.success("Code generated successfully!")
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+
+# Display the generated code (if available)
+if "generated_code" in st.session_state and st.session_state["generated_code"].strip():
+    st.subheader("Generated Code Preview")
+    st.code(st.session_state["generated_code"], language="python")
     
-    try:
-        result = response.json()
-        if isinstance(result, list) and "generated_text" in result[0]:
-            return result[0]["generated_text"]
-        else:
-            return "API 응답 오류: 유효한 코드가 생성되지 않았습니다."
-    except:
-        return "API 응답 오류: JSON 디코딩 실패"
-
-# 세션 상태 초기화 (없으면 빈 문자열로 설정)
-if "generated_code" not in st.session_state:
-    st.session_state["generated_code"] = ""
-
-st.title("AI 코드 생성 및 실행 (Qwen API)")
-
-# 사용자가 원하는 기능 입력
-user_input = st.text_area("원하는 UI 설명을 입력하세요", "버튼과 입력창이 있는 화면을 만들어줘")
-
-if st.button("코드 생성"):
-    with st.spinner("AI가 코드를 생성하는 중..."):
-        # AI에게 Streamlit 코드 생성을 요청하는 프롬프트
-        prompt = f"Streamlit을 사용하여 {user_input} 기능을 구현하는 Python 코드를 작성해줘."
-        response_text = query_huggingface_api(prompt)
-
-        # API 응답에서 코드 블록만 추출
-        if "```python" in response_text:
-            code = response_text.split("```python")[1].split("```")[0].strip()
-        else:
-            code = response_text  # 코드 블록이 없으면 그대로 사용
-
-        # 생성된 코드 저장
-        st.session_state["generated_code"] = code
-        st.code(code, language="python")
-
-if "generated_code" in st.session_state and st.session_state["generated_code"]:
-    if st.button("뷰 보기 (새 창)"):
-        st.switch_page("pages/preview.py")
+    # Provide a link to view the preview page
+    st.markdown("[View Preview](./preview)", unsafe_allow_html=True)

@@ -1,13 +1,13 @@
 import streamlit as st
 
-st.title("AI가 생성한 코드 실행")
+st.title("Code Execution Preview")
 
-# 코드 실행 오류 방지 처리
-try:
-    if "generated_code" in st.session_state and st.session_state["generated_code"]:
-        exec(st.session_state["generated_code"])
-    else:
-        st.warning("코드를 먼저 생성해 주세요.")
-except Exception as e:
-    st.error(f"코드 실행 중 오류 발생: {e}")
-    st.write("디버깅: 오류 메시지", str(e))
+# Check if generated code exists in session_state
+if "generated_code" not in st.session_state or not st.session_state["generated_code"].strip():
+    st.error("No generated code found. Please generate code in the main app first.")
+else:
+    try:
+        # Execute the generated code safely
+        exec(st.session_state["generated_code"], globals())
+    except Exception as e:
+        st.error(f"Error executing generated code: {e}")
