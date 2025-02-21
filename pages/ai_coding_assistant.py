@@ -66,4 +66,3 @@ if user_input:
     # 생성된 AI 응답을 대화 기록에 추가하고 UI에 표시
     st.session_state.chat_history.append({"role": "assistant", "content": assistant_message})  # AI 응답을 기록
     st.chat_message("assistant").write(assistant_message)  # AI의 응답을 UI에 표시
-
