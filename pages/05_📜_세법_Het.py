@@ -34,6 +34,13 @@ index = pc.Index(pinecone_index_name)
 # 4. Streamlit UI 설정
 st.set_page_config(page_title="05_📜_세법_Het", page_icon="💬", layout="wide")
 
+current_page = "ai_text_assistant"  # 현재 페이지의 고유한 식별자
+page_key = f"chat_history_{current_page}"
+
+# 페이지별 대화 기록 초기화
+if page_key not in st.session_state:
+    st.session_state[page_key] = []
+
 # 사이드바: 설정 및 대화 기록 초기화
 with st.sidebar:
     st.header("📌 설정")

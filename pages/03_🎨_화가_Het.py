@@ -25,7 +25,7 @@ prompt = st.chat_input("생성할 이미지 설명을 입력하세요:")  # 사�
 
 # 텍스트 번역 및 변환 모델 추가 (한글 → 영어 변환 후 전달)
 def translate_text(input_text):
-    messages = [{"role": "user", "content": f"Translate this to English: {input_text}"}]
+    messages = [{"role": "user", "content": f"Translate this to English: {input_text}",}]
     completion = client.chat.completions.create(
         model="google/gemma-2-9b-it",  # 한글을 영어로 번역할 모델 사용
         messages=messages, 
