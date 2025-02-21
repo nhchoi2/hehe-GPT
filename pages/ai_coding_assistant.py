@@ -69,11 +69,10 @@ if user_input:
     st.chat_message("assistant").write(assistant_message)  # AI의 응답을 UI에 표시
 
 if st.button("View Preview"):
-    # 동일한 브라우저 탭에서 /preview 페이지로 이동합니다.
     components.html(
         """
         <script>
-            window.location.href = '../preview/preview';
+            window.open('/preview', '_blank');
         </script>
         """,
         height=0,
