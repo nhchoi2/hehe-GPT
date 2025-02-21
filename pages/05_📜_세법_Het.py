@@ -32,7 +32,7 @@ if pinecone_index_name not in [idx.name for idx in pc.list_indexes()]:
 index = pc.Index(pinecone_index_name)
 
 # 4. Streamlit UI 설정
-st.set_page_config(page_title="세법전문 AI, Kevin", page_icon="💬", layout="wide")
+st.set_page_config(page_title="05_📜_세법_Het", page_icon="💬", layout="wide")
 
 # 사이드바: 설정 및 대화 기록 초기화
 with st.sidebar:
@@ -44,7 +44,7 @@ with st.sidebar:
 
 # 메인 타이틀 및 설명
 st.title("💬 세법전문 AI, Kevin")
-st.write("질문을 입력하면 Kevin이 답변해드립니다.")
+st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
