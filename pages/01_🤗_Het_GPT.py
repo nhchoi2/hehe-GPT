@@ -39,27 +39,31 @@ def get_response():
     user_input = st.session_state.chat_input  
     if user_input:
         # 기존 대화 기록을 메시지 리스트로 변환 (오래된 순서대로)
-        conversation_messages = []
-        # 저장된 대화 기록은 최신 메시지가 앞에 있으므로, 역순으로 정렬합니다.
-        for role, message in reversed(st.session_state[page_key]):
-            if role.startswith("👤"):  # 사용자 메시지인 경우
-                conversation_messages.append({"role": "user", "content": message})
-            elif role.startswith("🤖"):  # 헷GPT(assistant) 메시지인 경우
-                conversation_messages.append({"role": "assistant", "content": message})
-        # 현재 사용자의 입력도 추가합니다.
-        conversation_messages.append({"role": "user", "content": user_input})
-        
-        with st.spinner("헷GPT가 답변을 생성 중입니다..."):
-            response = client.chat.completions.create(
-                model="google/gemma-2-9b-it",
-                messages=conversation_messages,  # 대화 이력을 포함한 메시지 리스트 전달
-                max_tokens=1024,
-            ).choices[0].message.content
+        # 기존 대화 기록을 하나의 문자열로 합치기
+            conversation_history = ""
+            for role, message in st.session_state[page_key]:
+                conversation_history += f"{role} {message}\n"
             
-            # 대화 기록 업데이트 (최신 메시지가 위에 표시되도록)
-            st.session_state[page_key].insert(0, ("🤖 헷GPT:", response))
-            st.session_state[page_key].insert(0, ("👤 사용자:", user_input))
-            st.session_state.pop("chat_input", None)
+            # 프롬프트 생성 시 대화 기록을 포함
+            system_prompt = """
+                당신은 친절하고, 전문적인 한국인 비서입니다. 항상 친절하고 자세하게 답변하세요.
+                사용자가 질문을 입력하면, 해당 질문에 대해 전문적인 답변을 제공합니다.
+                ...
+            """
+            # 전체 프롬프트 구성
+            prompt = f"{system_prompt}\n대화 기록:\n{conversation_history}\nContext:\n{context}\n\n사용자: {user_input}\n모델:"
+                
+            with st.spinner("헷GPT가 답변을 생성 중입니다..."):
+                response = client.chat.completions.create(
+                    model="google/gemma-2-9b-it",
+                    messages=[{"role": "user", "content": prompt}],  # 대화 이력을 포함한 메시지 리스트 전달
+                    max_tokens=1024,
+                ).choices[0].message.content
+                
+                # 대화 기록 업데이트 (최신 메시지가 위에 표시되도록)
+                st.session_state[page_key].insert(0, ("👤 사용자:", user_input))
+                st.session_state[page_key].insert(0, ("🤖 헷GPT:", response))
+                st.session_state.pop("chat_input", None)
             
 # 대화 출력 (최신 메시지가 위로)
 st.markdown("### 대화 기록")  # 대화 기록 섹션 제목 출력
