@@ -3,14 +3,41 @@ import streamlit as st
 # 페이지 설정
 st.set_page_config(page_title="헷GPT 소개", layout="wide")
 st.markdown("""
-<style>
-    .stTextInput, .stTextArea {
-        border-radius: 10px;
-        padding: 10px;
-        background-color: #ffffff;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    }
-</style>
+    <style>
+        /* 전체 배경 스타일 */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* 카드 스타일 */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* 버튼 스타일 */
+        .stButton > button {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+        .stButton > button:hover {
+            transform: scale(1.05);
+        }
+
+        /* 입력창 스타일 */
+        .stTextInput > div, .stTextArea > div {
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 """, unsafe_allow_html=True)
 
 # 제목
