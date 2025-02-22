@@ -117,12 +117,23 @@ def get_response():
                 for match in results["matches"]:
                     context += match["metadata"].get("text", "") + "\n"
             
-            # generate_prompt 함수를 통해 전체 프롬프트 구성
-            prompt = generate_prompt(user_input, context)
+            # 기존 대화 기록을 하나의 문자열로 합치기
+            conversation_history = ""
+            for role, message in st.session_state[page_key]:
+                conversation_history += f"{role} {message}\n"
+            
+            # 프롬프트 생성 시 대화 기록을 포함
+            system_prompt = """
+                당신은 전문적인 세무사 관리자입니다. 항상 친절하고 자세하게 답변하세요.
+                사용자가 질문을 입력하면, 해당 질문에 대해 전문적인 세무 상담 답변을 제공합니다.
+                ...
+            """
+            # 전체 프롬프트 구성
+            prompt = f"{system_prompt}\n대화 기록:\n{conversation_history}\nContext:\n{context}\n\n사용자: {user_input}\n모델:"
             
             # 프롬프트가 단순한 구체성 부족 메시지인 경우, 모델 호출 없이 해당 메시지를 응답으로 사용
-            if prompt == "질문에 대한 내용이 많아 답변이 어렵습니다. 구체적으로 질문해주세요.":
-                response = prompt
+            if user_input.strip() == "":
+                response = "질문에 대한 내용이 많아 답변이 어렵습니다. 구체적으로 질문해주세요."
             else:
                 response = client.chat.completions.create(
                     model="google/gemma-2-9b-it",
