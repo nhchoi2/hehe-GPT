@@ -15,8 +15,8 @@ st.set_page_config(page_title="화가 헷GPT", page_icon="🎨", layout="wide")
 
 # 웹 페이지 제목 및 설명 추가
 st.title("🎨 이미지 생성하는 헷GPT")
-st.write("텍스트를 입력하면 헷GPT가 이미지를 생성해줍니다!")
-st.markdown("""
+with st.expander("텍스트를 입력하면 헷GPT가 이미지를 생성해줍니다! - 설명보기기"):
+    st.markdown("""
 이 페이지에서는 **사용자가 입력한 텍스트를 기반으로 AI가 이미지를 생성**합니다.  
 AI가 이미지를 잘 생성할 수 있도록 **명확한 프롬프트(설명)를 입력하세요!**  
 
