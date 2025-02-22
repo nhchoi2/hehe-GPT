@@ -131,8 +131,8 @@ def get_response():
                 ).choices[0].message.content
             
             # 대화 기록 업데이트 (최신 메시지가 위에 표시되도록)
-            st.session_state.chat_history.insert(0, ("👤 사용자:", user_input))
-            st.session_state.chat_history.insert(0, ("🤖 세법_Het:", response))
+            st.session_state[page_key] .insert(0, ("👤 사용자:", user_input))
+            st.session_state[page_key] .insert(0, ("🤖 세법_Het:", response))
             st.session_state.pop("chat_input", None)
 
 # 대화 기록 출력 (최신 메시지가 위쪽에 보이도록 역순 출력)
