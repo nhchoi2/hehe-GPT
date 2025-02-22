@@ -72,8 +72,7 @@ with st.expander("💡 사용방법 & 샘플 코드 확인"):
 
 # 📌 사용자 입력 필드 (st.chat_input() 활용)
 st.markdown('<div class="card">', unsafe_allow_html=True)
-st.subheader("💬 실행할 코드를 입력하세요:")
-code_input = st.chat_input("Python 또는 HTML 코드를 입력하세요...", key="code_chat_input")
+code_input = st.chat_input("Python 또는 HTML 코드를 입력하세요...", key="code_chat_input",height=200)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # 📌 코드 실행 처리 함수
@@ -102,3 +101,5 @@ def execute_code():
 # 📌 사용자가 입력 후 실행하도록 설정
 if code_input:
     execute_code()
+
+
