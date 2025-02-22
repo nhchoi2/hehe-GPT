@@ -39,20 +39,32 @@ if "chat_history" not in st.session_state:
 
 # AI 응답 처리 함수
 def get_response():
-    user_input = st.session_state[page_key]  # 사용자가 입력한 텍스트 가져오기
+    # 올바른 입력 값 가져오기 (입력 필드는 "chat_input"에 저장됩니다)
+    user_input = st.session_state.chat_input  
     if user_input:
-        with st.spinner("헷GPT가 답변을 생성 중입니다..."):  # AI 응답 생성 중 스피너 표시
+        # 기존 대화 기록을 메시지 리스트로 변환 (오래된 순서대로)
+        conversation_messages = []
+        # 저장된 대화 기록은 최신 메시지가 앞에 있으므로, 역순으로 정렬합니다.
+        for role, message in reversed(st.session_state[page_key]):
+            if role.startswith("👤"):  # 사용자 메시지인 경우
+                conversation_messages.append({"role": "user", "content": message})
+            elif role.startswith("🤖"):  # 헷GPT(assistant) 메시지인 경우
+                conversation_messages.append({"role": "assistant", "content": message})
+        # 현재 사용자의 입력도 추가합니다.
+        conversation_messages.append({"role": "user", "content": user_input})
+        
+        with st.spinner("헷GPT가 답변을 생성 중입니다..."):
             response = client.chat.completions.create(
-                model="google/gemma-2-9b-it",  # 사용 모델 지정
-                messages=[{"role": "user", "content": user_input}],  # 사용자 메시지 전달
-                max_tokens=1024,  # 최대 토큰 설정
-            ).choices[0].message.content  # 응답 메시지 추출
+                model="google/gemma-2-9b-it",
+                messages=conversation_messages,  # 대화 이력을 포함한 메시지 리스트 전달
+                max_tokens=1024,
+            ).choices[0].message.content
             
-            # 대화 기록 저장
-            st.session_state[page_key].insert(0, ("👤 사용자:", user_input))  # 사용자 입력 저장
-            st.session_state[page_key].insert(0, ("🤖 헷GPT:", response))  # AI 응답 저장
-            st.session_state.pop("chat_input", None)  # 입력 필드 초기화
-
+            # 대화 기록 업데이트 (최신 메시지가 위에 표시되도록)
+            st.session_state[page_key].insert(0, ("🤖 헷GPT:", response))
+            st.session_state[page_key].insert(0, ("👤 사용자:", user_input))
+            st.session_state.pop("chat_input", None)
+            
 # 대화 출력 (최신 메시지가 위로)
 st.markdown("### 대화 기록")  # 대화 기록 섹션 제목 출력
 for role, message in reversed(st.session_state[page_key]):  # 대화 기록을 역순으로 출력
