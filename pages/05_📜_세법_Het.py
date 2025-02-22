@@ -52,7 +52,8 @@ with st.sidebar:
 # 메인 타이틀 및 설명
 st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
-st.markdown("""
+with st.expander("🔹 사용 방법 예시 보기"):
+    st.markdown("""
 이 페이지는 **세무법령에 대한 AI 챗봇**입니다.  
 사용자가 입력한 질문을 **AI가 분석하여 적절한 세무 정보를 제공**합니다.  
 - 🔍 **Pinecone 데이터베이스**를 활용하여 관련 법령을 검색  
