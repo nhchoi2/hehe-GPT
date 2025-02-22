@@ -21,7 +21,6 @@ st.title("🤖 코드헷GPT")
 st.write("코드를 입력하면 헷GPT가 개선점, 디버깅 방법 등을 안내해드립니다!")  
 with st.expander("**어떤 질문을 할 수 있나요?**"):
     st.markdown('''
-
 ✅ **Python 코드 최적화 방법**  
 ✅ **디버깅 및 오류 해결 방법**  
 ✅ **알고리즘 성능 개선**  
@@ -77,18 +76,18 @@ user_input = st.chat_input("코드를 입력하세요:")  # 사용자가 코드�
 # 사용자 입력 처리 및 AI 응답 생성
 if user_input:
     # 사용자가 입력한 내용을 chat_history에 추가하고 UI에 표시
-    st.session_state.chat_history.append({"role": "user", "content": user_input})  # 사용자 입력을 기록
+    st.session_state[page_key].append({"role": "user", "content": user_input})  # 사용자 입력을 기록
     st.chat_message("user").write(user_input)  # UI에 사용자 입력 표시
 
     # AI 응답 생성 요청: 지금까지의 대화 기록을 전달하여 문맥 기반 응답을 생성
     with st.spinner("헷GPT가 응답을 생성 중입니다..."):
         response = client.chat.completions.create(
             model="Qwen/Qwen2.5-Coder-32B-Instruct",  # 코드 관련 질문에 특화된 AI 모델 사용
-            messages=st.session_state.chat_history,  # 현재까지의 대화 기록을 API에 전달
+            messages=st.session_state[page_key],  # 현재까지의 대화 기록을 API에 전달
             max_tokens=1024,  # 최대 응답 길이를 1024 토큰으로 제한하여 효율적인 응답 생성
         )
         assistant_message = response.choices[0].message.content  # AI 응답에서 메시지 내용 추출
 
     # 생성된 AI 응답을 대화 기록에 추가하고 UI에 표시
-    st.session_state.chat_history.append({"role": "assistant", "content": assistant_message})  # AI 응답을 기록
+    st.session_state[page_key].append({"role": "assistant", "content": assistant_message})  # AI 응답을 기록
     st.chat_message("assistant").write(assistant_message)  # AI의 응답을 UI에 표시
