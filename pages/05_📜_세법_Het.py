@@ -34,7 +34,7 @@ index = pc.Index(pinecone_index_name)
 # 4. Streamlit UI 설정
 st.set_page_config(page_title="05_📜_세법_Het", page_icon="💬", layout="wide")
 
-current_page = "ai_text_assistant"  # 현재 페이지의 고유한 식별자
+current_page = "ai_tex_assistant"  # 현재 페이지의 고유한 식별자
 page_key = f"chat_history_{current_page}"
 
 # 페이지별 대화 기록 초기화
@@ -46,15 +46,12 @@ with st.sidebar:
     st.header("📌 설정")
     clear_chat = st.button("💬 대화 기록 초기화")
     if clear_chat:
-        st.session_state.chat_history = []
+        st.session_state[page_key] = []
         st.success("대화 기록이 초기화되었습니다.")
 
 # 메인 타이틀 및 설명
 st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
-
-if page_key not in st.session_state:
-    st.session_state.page_key = []
 
 def get_embedding(text):
     result = embedding_client.feature_extraction(text)
@@ -67,9 +64,6 @@ def get_embedding(text):
     return result
 
 def query_pinecone(query_text, top_k=3):
-    """
-    입력 질문의 임베딩을 생성한 후, Pinecone 인덱스에서 유사 문서를 검색합니다.
-    """
     embedding = get_embedding(query_text)
     if embedding is None:
         return None
@@ -98,13 +92,9 @@ def generate_prompt(user_input, context):
     return prompt
 
 def get_response():
-    """
-    사용자의 입력과 Pinecone에서 검색된 컨텍스트를 기반으로,
-    google/gemma-2-9b-it 모델을 호출하여 답변을 생성합니다.
-    """
     user_input = st.session_state.chat_input
     if user_input:
-        with st.spinner("Kevin이이 답변을 생성 중입니다..."):
+        with st.spinner("세법_Het이 답변을 생성 중입니다..."):
             # Pinecone에서 관련 컨텍스트 검색
             results = query_pinecone(user_input)
             context = ""
@@ -127,12 +117,12 @@ def get_response():
             
             # 대화 기록 업데이트 (최신 메시지가 위에 표시되도록)
             st.session_state.chat_history.insert(0, ("👤 사용자:", user_input))
-            st.session_state.chat_history.insert(0, ("🤖 Kevin:", response))
+            st.session_state.chat_history.insert(0, ("🤖 세법_Het:", response))
             st.session_state.pop("chat_input", None)
 
 # 대화 기록 출력 (최신 메시지가 위쪽에 보이도록 역순 출력)
 st.markdown("### 대화 기록")
-for role, message in reversed(st.session_state.chat_history):
+for role, message in reversed(st.session_state[page_key]):
     st.markdown(f"**{role}** {message}")
 
 # 채팅 입력 필드: 입력 후 get_response 함수 호출
