@@ -4,7 +4,7 @@ import io
 import streamlit.components.v1 as components
 
 # ✅ Streamlit 페이지 설정
-st.set_page_config(page_title="💻 실행_Het", page_icon="💻", layout="wide")
+st.set_page_config(page_title="실행_Het", page_icon="💻", layout="wide")
 
 # ✅ 📌 **페이지 설명 추가**
 st.title("💻 Python & HTML 코드 실행기")
