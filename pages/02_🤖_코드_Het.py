@@ -19,6 +19,32 @@ st.set_page_config(
 # 페이지 제목 및 설명 표시
 st.title("🤖 코드헷GPT")  
 st.write("코드를 입력하면 헷GPT가 개선점, 디버깅 방법 등을 안내해드립니다!")  
+with st.expander("**어떤 질문을 할 수 있나요?**"):
+    st.markdown('''
+
+✅ **Python 코드 최적화 방법**  
+✅ **디버깅 및 오류 해결 방법**  
+✅ **알고리즘 성능 개선**  
+✅ **리팩토링 및 코드 스타일 가이드 적용**  
+✅ **특정 라이브러리 또는 프레임워크 사용법**  
+
+🔹 **샘플 질문 예시**
+- "아래 코드에서 성능을 개선할 방법이 있을까요?"
+- "이 Python 코드의 오류를 찾아주세요."
+- "이 코드에서 메모리 사용량을 줄이는 방법이 있을까요?"
+- "Django에서 REST API를 구현하는 방법을 알려주세요."
+- "Pandas를 사용하여 데이터프레임을 빠르게 필터링하는 방법은?"
+
+🔹 **검증용 샘플 코드**
+```python
+# ✅ 개선 가능성이 있는 코드 (비효율적인 리스트 순회)
+numbers = [i for i in range(100000)]
+squared_numbers = []
+for num in numbers:
+    squared_numbers.append(num ** 2)
+
+print(sum(squared_numbers)''')
+
 
 # Hugging Face InferenceClient 초기화
 client = InferenceClient(provider="hf-inference", api_key=api_key)  # API 키를 사용해 Hugging Face Inference Client 생성
