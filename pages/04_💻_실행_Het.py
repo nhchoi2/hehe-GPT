@@ -72,7 +72,7 @@ with st.expander("💡 사용방법 & 샘플 코드 확인"):
 
 # 📌 사용자 입력 필드 (st.chat_input() 활용)
 st.markdown('<div class="card">', unsafe_allow_html=True)
-code_input = st.chat_input("Python 또는 HTML 코드를 입력하세요...", key="code_chat_input",height=200)
+code_input = st.chat_input("Python 또는 HTML 코드를 입력하세요...", key="code_chat_input")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # 📌 코드 실행 처리 함수
