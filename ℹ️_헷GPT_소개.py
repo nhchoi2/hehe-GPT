@@ -2,6 +2,16 @@ import streamlit as st
 
 # 페이지 설정
 st.set_page_config(page_title="헷GPT 소개", layout="wide")
+st.markdown("""
+<style>
+    .stTextInput, .stTextArea {
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #ffffff;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # 제목
 st.title("헷GPT: 실시간 코드 실행 및 AI 챗봇")
