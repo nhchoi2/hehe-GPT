@@ -17,14 +17,14 @@ st.set_page_config(page_title="헷GPT", page_icon="💬", layout="wide")  # 페�
 current_page = "ai_het_assistant"  # 현재 페이지의 고유한 식별자
 page_key = f"chat_history_{current_page}"
 
-# 페이지별 대화 기록 초기화
+# 페이지별 대화 기록 초기화 (중복 없이 한 번만 초기화)
 if page_key not in st.session_state:
     st.session_state[page_key] = []
+
 # 사이드바 추가
 with st.sidebar:
     st.header("📌 설정")  # 사이드바 헤더
     clear_chat = st.button("💬 대화 기록 초기화")  # 대화 기록 초기화 버튼
-    
     if clear_chat:
         st.session_state[page_key] = []  # 대화 기록 초기화
         st.success("대화 기록이 초기화되었습니다.")  # 성공 메시지 출력
@@ -32,10 +32,6 @@ with st.sidebar:
 # 메인 제목 및 설명
 st.title("💬 똑똑한 AI 헷GPT")  # 메인 페이지 제목
 st.write("질문을 입력하면 헷GPT가 답변해드립니다.")  # 페이지 설명
-
-# 대화 기록 저장
-if "chat_history" not in st.session_state:
-    st.session_state[page_key] = []  # 세션 상태에 대화 기록이 없으면 초기화
 
 # AI 응답 처리 함수
 def get_response():
