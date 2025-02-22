@@ -13,13 +13,20 @@ client = InferenceClient(provider="hf-inference", api_key=api_key)  # Hugging Fa
 # Streamlit UI 설정
 st.set_page_config(page_title="헷GPT", page_icon="💬", layout="wide")  # 페이지 제목, 아이콘 및 레이아웃 설정
 
+# 현재 페이지에 대한 고유한 키 생성 (페이지별 대화 기록 유지)
+current_page = "ai_het_assistant"  # 현재 페이지의 고유한 식별자
+page_key = f"chat_history_{current_page}"
+
+# 페이지별 대화 기록 초기화
+if page_key not in st.session_state:
+    st.session_state[page_key] = []
 # 사이드바 추가
 with st.sidebar:
     st.header("📌 설정")  # 사이드바 헤더
     clear_chat = st.button("💬 대화 기록 초기화")  # 대화 기록 초기화 버튼
     
     if clear_chat:
-        st.session_state.chat_history = []  # 대화 기록 초기화
+        st.session_state[page_key] = []  # 대화 기록 초기화
         st.success("대화 기록이 초기화되었습니다.")  # 성공 메시지 출력
 
 # 메인 제목 및 설명
@@ -28,11 +35,11 @@ st.write("질문을 입력하면 헷GPT가 답변해드립니다.")  # 페이지
 
 # 대화 기록 저장
 if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []  # 세션 상태에 대화 기록이 없으면 초기화
+    st.session_state[page_key] = []  # 세션 상태에 대화 기록이 없으면 초기화
 
 # AI 응답 처리 함수
 def get_response():
-    user_input = st.session_state.chat_input  # 사용자가 입력한 텍스트 가져오기
+    user_input = st.session_state[page_key]  # 사용자가 입력한 텍스트 가져오기
     if user_input:
         with st.spinner("헷GPT가 답변을 생성 중입니다..."):  # AI 응답 생성 중 스피너 표시
             response = client.chat.completions.create(
@@ -42,13 +49,13 @@ def get_response():
             ).choices[0].message.content  # 응답 메시지 추출
             
             # 대화 기록 저장
-            st.session_state.chat_history.insert(0, ("👤 사용자:", user_input))  # 사용자 입력 저장
-            st.session_state.chat_history.insert(0, ("🤖 헷GPT:", response))  # AI 응답 저장
+            st.session_state[page_key].insert(0, ("👤 사용자:", user_input))  # 사용자 입력 저장
+            st.session_state[page_key].insert(0, ("🤖 헷GPT:", response))  # AI 응답 저장
             st.session_state.pop("chat_input", None)  # 입력 필드 초기화
 
 # 대화 출력 (최신 메시지가 위로)
 st.markdown("### 대화 기록")  # 대화 기록 섹션 제목 출력
-for role, message in reversed(st.session_state.chat_history):  # 대화 기록을 역순으로 출력
+for role, message in reversed(st.session_state[page_key]):  # 대화 기록을 역순으로 출력
     st.markdown(f"**{role}** {message}")
 
 # 입력 필드
