@@ -77,8 +77,7 @@ user_input = st.chat_input("코드를 입력하세요:")  # 사용자가 코드�
 if user_input:
     # 사용자가 입력한 내용을 chat_history에 추가하고 UI에 표시
     st.session_state[page_key].append({"role": "user", "content": user_input},
-                                      {"role": "system", "content": 
-                                       "당신은 세계 제일의 프로그래머 입니다. 코드작성시에 코드 설명도 한국어로 친절하세 해주세요"})  # 사용자 입력을 기록
+                                      {"role": "system", "content": "당신은 세계 제일의 프로그래머 입니다. 코드작성시에 코드 설명도 한국어로 친절하세 해주세요"})  # 사용자 입력을 기록
     st.chat_message("user").write(user_input)  # UI에 사용자 입력 표시
 
     # AI 응답 생성 요청: 지금까지의 대화 기록을 전달하여 문맥 기반 응답을 생성
