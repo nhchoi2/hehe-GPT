@@ -52,7 +52,21 @@ with st.sidebar:
 # 메인 타이틀 및 설명
 st.title("📜_세법_Het")
 st.write("질문을 입력하면 📜_세법_Het이 답변해드립니다.")
+st.markdown("""
+이 페이지는 **세무법령에 대한 AI 챗봇**입니다.  
+사용자가 입력한 질문을 **AI가 분석하여 적절한 세무 정보를 제공**합니다.  
+- 🔍 **Pinecone 데이터베이스**를 활용하여 관련 법령을 검색  
+- 🤖 **Hugging Face AI 모델(Gemma-2-9B-it)**이 법령을 분석하여 자연스러운 답변 제공  
 
+📌 **어떤 질문을 할 수 있나요?**
+✅ 소득세, 법인세, 부가가치세 관련 법령  
+✅ 세무 감면 및 공제 혜택  
+✅ 사업자 세금 신고 절차  
+✅ 종합소득세 신고 기한 및 제출 방법  
+✅ 기타 세무 관련 법령 및 절차  
+
+⚠️ **주의:** AI가 제공하는 정보는 참고용이며, 실제 법률 자문이 필요할 경우 전문가와 상담하세요.
+""")
 def get_embedding(text):
     result = embedding_client.feature_extraction(text)
     # 만약 결과가 numpy ndarray라면 리스트로 변환합니다.
